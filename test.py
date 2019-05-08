@@ -1,2 +1,3 @@
-# garabage
-# mijn garbage
+import settings
+
+print(settings.BASE_DIR)
