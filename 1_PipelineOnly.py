@@ -39,38 +39,38 @@ yield_input.append(y_inp1)
 yield_input.append(y_inp2)
 
 # generate yield
-bond_price_tabel = bp.generate_yield(yield_input,run_settings)
-session.bulk_save_objects(bond_price_tabel)
-session.commit()
+bond_price_table = bp.generate_yield(yield_input,run_settings)
+session.add_all(bond_price_table)
+# session.commit()
 
 # generate ISINS
-
+isins_table = bp.generate_isins(yield_input,run_settings,bond_price_table)
 
 
 # create a BondPrice
-bp = models.BondPrice(
-    BondPriceID=None,
-    Date=datetime.now(),
-    IsinNumber=1,
-    MarketMakerID=2,
-    Bid=3.14,
-    Ask=4.23,
-    Mid=3.73,
-    TimeStamp=datetime.now()
-)
-session.add(bp)
-session.commit()
-
-bond_prices = session.query(models.BondPrice).all()
-for bond_price in bond_prices:
-    print(f'ID: {bond_price.BondPriceID}')
-    print(f'Date: {bond_price.Date}')
-    print(f'IsInNumber: {bond_price.IsinNumber}')
-    print(f'MarketMakerID: {bond_price.MarketMakerID}')
-    print(f'Bid: {bond_price.Bid}')
-    print(f'Mid: {bond_price.Mid}')
-    print(f'Ask: {bond_price.Ask}')
-    print(f'TimeStamp: {bond_price.TimeStamp}')
+# bp = models.BondPrice(
+#     BondPriceID=None,
+#     Date=datetime.now(),
+#     IsinNumber=1,
+#     MarketMakerID=2,
+#     Bid=3.14,
+#     Ask=4.23,
+#     Mid=3.73,
+#     TimeStamp=datetime.now()
+# )
+# session.add(bp)
+# session.commit()
+#
+# bond_prices = session.query(models.BondPrice).all()
+# for bond_price in bond_prices:
+#     print(f'ID: {bond_price.BondPriceID}')
+#     print(f'Date: {bond_price.Date}')
+#     print(f'IsInNumber: {bond_price.IsinNumber}')
+#     print(f'MarketMakerID: {bond_price.MarketMakerID}')
+#     print(f'Bid: {bond_price.Bid}')
+#     print(f'Mid: {bond_price.Mid}')
+#     print(f'Ask: {bond_price.Ask}')
+#     print(f'TimeStamp: {bond_price.TimeStamp}')
 
 # session.commit()
 

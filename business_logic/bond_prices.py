@@ -9,14 +9,14 @@ from scipy import stats
 
 def generate_yield(yield_input, run_settings):
 
-    yield_output = []
+    yield_output = ()
     first_date = run_settings[0].StartDate
     last_date = run_settings[0].EndDate
     run_date = first_date
 
     for i in range(len(yield_input)):
         tenor_id = yield_input[i].tenor_id
-        bond_yield = yield_input[i].eff_yield
+        bond_yield = Decimal(yield_input[i].eff_yield)
         long_term_mean = Decimal(yield_input[i].long_term_mean)
         reversion_to_mean = run_settings[0].ReversionToMean
         standard_dev = math.pow(run_settings[0].Volatility, 0.5)
@@ -32,7 +32,7 @@ def generate_yield(yield_input, run_settings):
         run_date = first_date
         item = model.BondYield(id=None, bond_yield_date=run_date, bond_yield=bond_yield, tenor_id= tenor_id,
                                time_stamp=time_stamp)
-        yield_output.append(item)
+        yield_output.add(item)
 
         while run_date <= last_date:
             run_date = run_date + dt.timedelta(days=1)  # this method generates one bond price per tenor per day
@@ -48,13 +48,17 @@ def generate_yield(yield_input, run_settings):
             elif rate_after <= floor:
                 rate_after = floor
 
-            item = model.BondYield(id=None, bond_yield_date=run_date, bond_yield=rate_after, tenor_id=tenor_id,
+            item = model.BondYield(id=None, bond_yield_date=run_date, bond_yield=round(rate_after,6), tenor_id=tenor_id,
                                    time_stamp=time_stamp)
             yield_output.append(item)
             rate_before = rate_after
 
-            tmp = 0
-
     return yield_output
 
-def generate_isins()
+def generate_isins(yield_input, run_settings, bond_yield):
+
+    x = 2
+
+    test = 1
+
+    tmp = 0
