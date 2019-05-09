@@ -433,6 +433,12 @@ class BondYield(Base):
     TenorID = Column(Integer, nullable=False)
     TimeStamp = Column(DateTime, nullable=False)
 
+    def __init__(self, id, bond_yield_date, bond_yield, tenor_id, time_stamp):
+        self.BondYieldID = id
+        self.BondYieldDate = bond_yield_date
+        self.BondYield = bond_yield
+        self.TenorID = tenor_id
+        self.TimeStamp = time_stamp
 
 class CustomerPrice(Base):
     __tablename__ = 'CustomerPrice'

@@ -1,6 +1,8 @@
 import settings
 from db import models
+from db import helpers
 from db import queries as q
+from business_logic import bond_prices as bp
 from datetime import datetime
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
@@ -26,12 +28,23 @@ session.execute(q.truncate_CustomerPrice)
 # read all relevant data
 yield_query = session.execute(q.get_viewYieldInput)
 session.commit()
-bond_types = session.query(models.SDBondType).all()
 run_settings = session.query(models.RSBondPriceRunSetting).all()
-
-
-
 session.commit()
+
+# temporary step (see question on Wiki) - need to load the results from a normal SQL query into a named listed
+yield_input = []
+y_inp1 = helpers.YieldInput(18,300,'M',0.022, 0.024,0.0225)
+y_inp2 = helpers.YieldInput(19,360,'M',0.023,0.025,.02250)
+yield_input.append(y_inp1)
+yield_input.append(y_inp2)
+
+# generate yield
+bond_price_tabel = bp.generate_yield(yield_input,run_settings)
+session.bulk_save_objects(bond_price_tabel)
+session.commit()
+
+# generate ISINS
+
 
 
 # create a BondPrice
