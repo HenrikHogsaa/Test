@@ -1,5 +1,6 @@
 import settings
 from db import models
+from db import queries as q
 from datetime import datetime
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
@@ -15,8 +16,23 @@ Session = sessionmaker(bind=some_engine)
 # create a Session
 session = Session()
 
-# delete all BondPrice records
-session.query(models.BondPrice).delete()
+
+# truncate all data tables
+session.execute(q.truncate_BondPrice)
+session.execute(q.truncate_BondYield)
+session.execute(q.truncate_Isin)
+session.execute(q.truncate_CustomerPrice)
+
+# read all relevant data
+yield_query = session.execute(q.get_viewYieldInput)
+session.commit()
+bond_types = session.query(models.SDBondType).all()
+run_settings = session.query(models.RSBondPriceRunSetting).all()
+
+
+
+session.commit()
+
 
 # create a BondPrice
 bp = models.BondPrice(
@@ -30,6 +46,7 @@ bp = models.BondPrice(
     TimeStamp=datetime.now()
 )
 session.add(bp)
+session.commit()
 
 bond_prices = session.query(models.BondPrice).all()
 for bond_price in bond_prices:
@@ -43,3 +60,5 @@ for bond_price in bond_prices:
     print(f'TimeStamp: {bond_price.TimeStamp}')
 
 # session.commit()
+
+#
