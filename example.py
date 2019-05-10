@@ -12,6 +12,7 @@ bond_yield_table = [
     BondYield(18, 4.234234),
     BondYield(19, 5.23432),
     BondYield(19, 7.324234),
+    BondYield(18, 4.34553),
 ]
 
 # vraag 1: select distinct TenorID from bond_yield_table
@@ -33,3 +34,9 @@ for b in bond_yield_table:
 
 print("Antwoord 3b")
 print([b for b in bond_yield_table if b.TenorID == 18])
+
+# bonus !!! loop per TenorID door de list
+for id in set([y.TenorID for y in bond_yield_table]):
+    for b in bond_yield_table:
+        if b.TenorID == id:
+            print(b)
