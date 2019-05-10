@@ -30,7 +30,7 @@ def generate_yield(yield_input, run_settings):
         rate_before = Decimal(bond_yield)
         time_stamp = f'{dt.datetime.now().strftime("%Y-%m-%d %H:%M:%S")}'
         run_date = first_date
-        item = model.BondYield(id=None, bond_yield_date=run_date, bond_yield=bond_yield, tenor_id= tenor_id,
+        item = model.BondYield(id=None, bond_yield_date=run_date, bond_yield=round(bond_yield, 6), tenor_id= tenor_id,
                                time_stamp=time_stamp)
         yield_output.append(item)
 

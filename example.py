@@ -36,7 +36,9 @@ print("Antwoord 3b")
 print([b for b in bond_yield_table if b.TenorID == 18])
 
 # bonus !!! loop per TenorID door de list
-for id in set([y.TenorID for y in bond_yield_table]):
+print("Bonus Antwoord")
+for _id in set([y.TenorID for y in bond_yield_table]):
     for b in bond_yield_table:
-        if b.TenorID == id:
+        if b.TenorID == _id:
             print(b)
+
