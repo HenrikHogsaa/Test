@@ -9,7 +9,7 @@ from scipy import stats
 
 def generate_yield(yield_input, run_settings):
 
-    yield_output = ()
+    yield_output = []
     first_date = run_settings[0].StartDate
     last_date = run_settings[0].EndDate
     run_date = first_date
@@ -32,7 +32,7 @@ def generate_yield(yield_input, run_settings):
         run_date = first_date
         item = model.BondYield(id=None, bond_yield_date=run_date, bond_yield=bond_yield, tenor_id= tenor_id,
                                time_stamp=time_stamp)
-        yield_output.add(item)
+        yield_output.append(item)
 
         while run_date <= last_date:
             run_date = run_date + dt.timedelta(days=1)  # this method generates one bond price per tenor per day

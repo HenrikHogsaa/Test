@@ -41,7 +41,7 @@ yield_input.append(y_inp2)
 # generate yield
 bond_price_table = bp.generate_yield(yield_input,run_settings)
 session.add_all(bond_price_table)
-# session.commit()
+session.commit()
 
 # generate ISINS
 isins_table = bp.generate_isins(yield_input,run_settings,bond_price_table)
